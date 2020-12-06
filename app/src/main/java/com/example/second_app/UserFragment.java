@@ -14,9 +14,9 @@ public class UserFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState){ //вызывается при создании или перезапуска активности
         super.onCreate(savedInstanceState);
-        user = new User();
-        user.setUserName("Ivan");
-        user.setUserLastName("Ivanov");
+        Bundle bundle = getArguments();
+        //user.setUserName("Ivan");
+        user = (User) bundle.getSerializable("user"); // Принимаем объект user
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){ // метод(onCreateView вызывается один раз, когда фрагмент должен загрузить на экран свой интерфейс) принимает аргументы из метода для взятия данных из XML-файла, контейнера содержащего виды и макеты, метод для сохранения состояния.
