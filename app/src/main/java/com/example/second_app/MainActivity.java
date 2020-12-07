@@ -33,21 +33,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        Fragment fragment = new UserListFragment(); // создан объект Fragment с именем fragment
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment,"main_fragment").commit();
+    }
+
+    @Override
     public void onBackPressed() {
         Fragment currentFragment = fragmentManager.findFragmentByTag("main_fragment");
         if (currentFragment != null && currentFragment.isVisible()){
             super.onBackPressed();
         }else {
-            Fragment fragment = new UserListFragment();
+            //---------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!--------------------------
+            Fragment fragment = new UserListFragment();// СТРОКА ДУБЛИРУЮЩАЯ СПИСОК
+            //---------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!---------------------------
             fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment, "main_fragment").commit();
         }
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-        Fragment fragment = new UserListFragment(); // создан объект Fragment с именем fragment
-        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment,"main_fragment").commit();
     }
 
 
@@ -66,17 +68,6 @@ public class MainActivity extends AppCompatActivity {
         fragment.setArguments(bundle);
         //Заменяем фрагмент
         fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
-
-//        back.findViewById(R.id.buttonBack);
-//        back.setOnClickListener(v -> {
-//            try {
-//                Intent intent = new Intent();
-//                startActivity(intent);
-//            } catch (Exception e) {
-//
-//            }
-//        });
-
     }
     
 }

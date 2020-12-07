@@ -7,7 +7,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.second_app.database.UserBaseHelper;
-import com.example.second_app.database.UserCursorWrapper;
 import com.example.second_app.database.UserDbSchema;
 
 public class UserList {
@@ -15,7 +14,7 @@ public class UserList {
     private static UserList userList;
     private Context context;
     private SQLiteDatabase database;
-    private List users = new ArrayList();
+    private List users;// = new ArrayList(); ----ОДИН ИЗ ВИНОВНИКОВ ДУБЛИРОВАНИЯ
 
     public static UserList get(Context context){
         if(userList == null){
@@ -29,11 +28,12 @@ public class UserList {
 
     }
     public List getUsers(){
+        users = new ArrayList(); // Вследствии видимости переменной, перенёс её сюда.
         UserCursorWrapper cursor = queryUsers(null,null);
         try {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()){
-                users.add(cursor.getUser());
+                users.add(cursor.getUser()); // Добавил Юзера в список для вывода
                 cursor.moveToNext();
             }
         }finally {
