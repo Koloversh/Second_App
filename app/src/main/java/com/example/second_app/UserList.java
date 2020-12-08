@@ -66,4 +66,21 @@ public class UserList {
                 null);
         return new UserCursorWrapper(cursor);
     }
+
+    public void updateUser(User user){
+        String uuidString = user.getUuid().toString();
+        ContentValues values = getContentValues(user);
+
+        database.update(UserDbSchema.UserTable.NAME,values,
+                UserDbSchema.UserTable.Cols.UUID+"=?",
+                new String[]{uuidString});
+    }
+
+    public void deleteUser(User user){
+        // Удаляем пользователя
+        String uuidString = user.getUuid().toString();
+       // ContentValues values = getContentValues(user);
+        database.delete(UserDbSchema.UserTable.NAME, UserDbSchema.UserTable.Cols.UUID+"=?", new String[]{uuidString});
+    }
+
 }
